@@ -1,0 +1,18 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <form action="{% url 'register' %}" method="get">
+        <input type="submit" value="Register">
+    </form>
+{% endblock %}
+
+{% block content %}    
+
+<p>
+A confirmation email has been sent to {{email}}.  Please click the link
+in that email to confirm your email address and complete your registration for
+your address book.
+</p>
+
+
+{% endblock %}

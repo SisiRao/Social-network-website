@@ -1,0 +1,84 @@
+{% extends "socialnetwork/base.html" %}
+{% block user-info %}
+<label hidden id="page_mark">Profile</label>
+    <div class="user" style="font-size: 20px; padding-left:60px;">{{user.first_name}} {{user.last_name}}</div> <br>
+    <div class="wrapper">
+       <nav class="menu">
+          <div class="clearfix">
+
+                 <form action="{% url 'globalstream' %}" method="get">
+                      <button name="id" class="nav" value="{{user.id}}">Global Stream</button>
+                  </form>
+
+                 <form action="{% url 'followerstream' user.id %}" method="get">
+                      <button name="id" class="nav"  value="{{user.id}}">Follower Stream</button>
+                  </form>
+
+                  <form action="{% url 'profile' user.id %}" method="get">
+                      <button name="id" class="nav" value="{{user.id}}">My Profile</button>
+                  </form>
+
+                  <form action="{% url 'logout' %}" method="get">
+                      <button name="id" class="nav" value="{{user.id}}">Logout</button>
+                  </form>
+          </div>
+       </nav>
+    </div>
+{% endblock %}
+{% block content %}
+    <table class="profile">
+        <tr>
+            <td><img id="profile_pic"  src="{% url 'get_picture' profile.owner.id %}"  alt="Profile picture" />
+                <p class="user" >{{profile.owner.first_name}} {{profile.owner.last_name}}</p></td>
+            <td> <div id="bio" style="height:260px; width:400px;margin-top: -45px; margin-left: 60px; background: linear-gradient(to right, #66FFCC, #66FF99 );border-style: inset; border-color:#6666FF;border-width: 3px;text-align: center;">
+                    <p> {{profile.bio}}</p>
+                 </div></td>
+        </tr>
+    </table><br><br>
+
+
+
+    <div class="edit_profile">
+        {% if user.id == profile.owner.id %}
+        <form enctype="multipart/form-data" action="{% url 'edit_profile' %}" method="POST">
+        <table class="update_profile">
+            <tr>
+                <td>Upload profile picture and bio:
+                        {{form.picture}}
+                </td>
+                <td>
+                        {{form.bio}}
+                        <input type="submit" value="Update Bio">
+                </td>
+            </tr>
+            {% for error in errors %}
+                <p style="color:red">
+                    {{error}}
+                </p>
+            {% endfor %}
+        </table>
+            {% csrf_token %}
+        </form>
+        {% endif %}
+    </div><br><br>
+    <div class="following">
+        {% if user.id == profile.owner.id %}
+            <br> You are following :<br>
+            {% for follow in followlist %}
+             <a  href="{% url 'profile' follow.id %}" style="color: blue;">{{follow.first_name}}{{follow.last_name}}</a><br>
+            {% endfor %}
+        {% elif not is_followed %}
+            <form action="{% url 'follow' profile.owner.id %}" method="POST">
+                <button name="id" style="height:40px; width:80px" value="0">Follow</button>
+                {% csrf_token %}
+            </form>
+        {% else %}
+            <form action="{% url 'unfollow' profile.owner.id %}" method="POST">
+                <button name="id" style="height:40px; width:80px" value="0">Unfollow</button>
+                {% csrf_token %}
+            </form>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,141 @@
+.big-heading {
+    background: linear-gradient(to right, #FFFF66, #CCFF66, #99FF99 );
+    height:180px;
+    width: 100%;
+    color: #9900FF;
+    text-shadow: 7px 7px 0 rgba(80,255,0,0.8);
+    font-size: 80px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 50px;
+    padding-left: 50px;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right:-10px;
+}
+
+.headline {
+    color: #000099;
+    font-size: 40px;
+    font-family: Arial;
+    font-weight: bold;
+    height:60px;
+    text-align: center;
+    padding-bottom: 6px;
+    padding-top: 10px;
+
+}
+
+.comment{
+    color: #000066;
+    font-size: 15px;
+    text-align: left;
+    padding-left: 10px;
+}
+.commentbox{
+
+    background: linear-gradient(to right, #CCCCFF, #CCFFFF );
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.whowhen {
+    font-style:italic;
+    color: 	#505050;
+    font-size: 15px;
+    text-align: right;
+    padding-right:30px;
+}
+
+.post {
+    background: linear-gradient(to right, #FFCC66, #FFFFCC, #FFCCCC );
+    border-style: outset;
+    border-color:#9999FF;
+    border-width: 8px;
+    text-align: center;
+
+}
+
+.user-info {
+    text-align: right;
+    font-family: sans-serif;
+    padding-right: 30px;
+    margin-top: -40px;
+}
+
+.message {
+    color:blue;
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+    font-family: sans-serif;
+    padding: 25px 50px;
+}
+
+.search-bar {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: large;
+    padding: 25px 50px;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    font-family: sans-serif;
+    padding: 25px 50px;
+}
+
+.error {
+    color:red;
+}
+
+.list {
+    padding: 3px;
+}
+
+th {
+    font-weight: normal;
+    text-align: left;
+}
+
+a {
+     text-decoration: none;
+     color:black;
+     padding: 3px;
+}
+
+a:hover {
+     background-color:lightblue;
+}
+body {
+    background: linear-gradient(to right, #CCFFCC, #99FFFF, #CCFFFF );
+    background-size: cover;
+}
+
+#newpost{
+    background: linear-gradient(to right, #66FFCC, #66FF99 );
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-style: inset;
+    border-color:#6666FF;
+    border-width: 3px;
+    text-align: center;
+}
+
+.nav{
+    width:140px;
+    height:30px;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+
+}
+
+div img{
+    width:200px;
+    height:260px;
+
+}

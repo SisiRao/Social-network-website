@@ -1,0 +1,52 @@
+{% extends "socialnetwork/base.html" %}
+{% block title %}Y World Follow{% endblock %}
+{% block user-info %}
+    <label hidden id="page_mark">Follow</label>
+    <div class="user" style="font-size: 20px; padding-left:60px;">{{user.first_name}} {{user.last_name}}</div> <br>
+    <label>ID: </label><label id="user_id">{{user.id}}</label>
+    <div class="wrapper">
+       <nav class="menu">
+          <div class="clearfix">
+
+                 <form action="{% url 'globalstream' %}" method="get">
+                      <button name="id" class="nav" value="{{user.id}}">Global Stream</button>
+                  </form>
+
+                 <form action="{% url 'followerstream' user.id %}" method="get">
+                      <button name="id" class="nav"  value="{{user.id}}">Follower Stream</button>
+                  </form>
+
+                  <form action="{% url 'profile' user.id %}" method="get">
+                      <button name="id" class="nav" value="{{user.id}}">My Profile</button>
+                  </form>
+
+                  <form action="{% url 'logout' %}" method="get">
+                      <button name="id" class="nav" value="{{user.id}}">Logout</button>
+                  </form>
+          </div>
+       </nav>
+    </div>
+{% endblock %}
+{% block content %}
+    {% for error in errors %}
+        <p style="color:red">
+            {{error}}
+        </p>
+    {% endfor %}
+    <div id="newpost">
+                   <form name="postform" action="{% url 'new_post' %}" method="POST">
+                       <table>
+                           <tr>
+                               {% for field in form.visible_fields %}
+                               <td style="padding-left: 230px;">{{field}}</td>
+                               {% endfor %}
+                               <td><input type="submit" value="New Post" style="height:40px;"></td>
+                           </tr>
+                       </table>
+                       {% csrf_token %}
+                   </form>
+    </div>
+    <h1 class="headline">See what's happening with people you followed</h1>
+ <ul id="posts_area_follow">
+ </ul>
+{% endblock %}
