@@ -1,0 +1,14 @@
+{% extends "OOTD/base.html" %}
+
+{% block content %}
+<div style="text-align:center">
+
+    <h1>Ops, an error seems to occur~ Please click me to navigate to HomePage!</h1>
+    <form action="{% url 'index' %}" mothod="GET">
+        <button type="submit">Back To HomePage</button>
+    </form>
+</div>
+{% endblock %}
+
+
+

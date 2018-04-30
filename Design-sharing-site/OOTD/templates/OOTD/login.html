@@ -1,0 +1,41 @@
+{% extends "OOTD/base.html" %}
+
+{% block login %}
+{% if not user.is_authenticated %}
+<!-- Trigger the modal with a button -->
+<a typle="button" class="login-menu-btn" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Login</a>
+
+<!-- Modal content-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Login</h4>
+			</div>
+
+			<div class="modal-body">
+				<form method="post" action="{% url 'login' %}">
+					<a >{{ form.username.label_tag }}</a><br/>
+					<a >{{ form.username }}</a><br/>
+					<a >{{ form.password.label_tag }}</a><br/>
+					<a >{{ form.password }}</a><br/><br/>
+					<a href="{% url 'forgetPassword' %}"><u style="color:black">Forget Password?</u></a><br/>
+					<a><input class="btn btn-default btn-sm" type="submit" value="Login" /></a>
+					
+					{% csrf_token %}
+				</form>
+
+				<form action="{% url 'register' %}" method="get">
+					<a><input class="btn btn-default btn-sm" type="submit" value="Register"></a>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

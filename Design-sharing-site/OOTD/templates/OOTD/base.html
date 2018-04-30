@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			crossorigin="anonymous"></script>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Outfit of The Day </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- Google Webfonts -->
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	{% load staticfiles %}
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<!-- Salvattore -->
+	<link rel="stylesheet" href="{% static 'css/salvattore.css' %}">
+	<!-- Theme Style -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<!-- Chatting Style -->
+	<link rel="stylesheet" href="{% static 'css/chatting.css' %}">
+	<!-- Tag Style-->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-tagsinput.css' %}">
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- jQuery UI CSS -->
+	<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" type="text/css"/>
+	<!-- Font Awesome CSS -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<!-- Bootstrap CSS -->
+<!-- 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="{% static 'js/respond.min.js' %}"></script>
+
+	<![endif]-->
+
+</head>
+<body>
+<header id="fh5co-header" role="banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				{% block login%}
+				{% endblock %}
+
+				{% if user.is_authenticated %}
+				<a href="{% url 'profile' user.id %}" class="login-menu-btn" ><span class="glyphicon glyphicon-user"></span> Hi {{ user.username }}</a>
+				{% endif %}
+
+				<a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">Menu <i class="icon-menu"></i></a>
+
+				<a href="{% url 'index' %}" class="navbar-brand" href="index.html">OUTFIT OF THE DAY</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<div class="user-info">
+	{% block user-info %}
+
+	{% endblock %}
+</div>
+
+{% if message %}
+<div class="message">
+	{{message}}
+</div>
+{% endif %}
+
+<div class="content">
+	{% block content %}
+
+	{% endblock %}
+</div>
+
+{% if user.is_authenticated %}
+<div id="fh5co-offcanvass">
+	<a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
+	<h1 class="fh5co-logo"><a class="navbar-brand" href="index.html">OUTFIT OF THE DAY</a></h1>
+	<ul>
+		<li><a href="{% url 'index' %}">Home</a></li>
+		<li><a href="{% url 'profile' user.id %}">Profile</a></li>
+		<li><a href="{% url 'newpost' %}">New Outfit</a></li>
+		<li><a href="{% url 'contact' %}">Contact</a></li>
+		{% if user.is_authenticated %}
+		<li><a href="{% url 'logout' %}">Logout</a></li>
+		{% endif %}
+	</ul>
+	<h3 class="fh5co-lead">Connect with us</h3>
+	<p class="fh5co-social-icons">
+		<a href="#"><i class="icon-twitter"></i></a>
+		<a href="#"><i class="icon-facebook"></i></a>
+		<a href="#"><i class="icon-instagram"></i></a>
+		<a href="#"><i class="icon-dribbble"></i></a>
+		<a href="#"><i class="icon-youtube"></i></a>
+	</p>
+</div>
+{% endif %}
+<!-- END .header -->
+<footer id="fh5co-footer">
+	<div class="container">
+		<div class="row row-padded">
+			<div class="col-md-12 text-center">
+				<p>Donate to CMU OOTD Squad || 赏！</p>
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+					<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+				</form>
+
+			</div>
+			<div class="col-md-12 text-center">
+				<p>Share this page to your friend!</p>
+				<p class="fh5co-social-icons">
+					<a href="https://twitter.com/intent/tweet?url=http://{{request.get_host}}{{request.get_full_path}}"><i class="icon-twitter"></i></a>
+					<a href="https://www.facebook.com/sharer.php?u=http://{{request.get_host}}{{request.get_full_path}}"><i class="icon-facebook"></i></a>
+					<a href="#"><i class="icon-instagram"></i></a>
+					<a href="#"><i class="icon-dribbble"></i></a>
+					<a href="#"><i class="icon-youtube"></i></a>
+				</p>
+				<p><small>&copy; Outfit of The Day. All Rights Reserved. <br>Designed by: CMU Students| Images by: <a href="http://pexels.com" target="_blank">Pexels</a> </small></p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery Easing -->
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Waypoints -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Magnific Popup -->
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<!-- Salvattore -->
+<script src="{% static 'js/salvattore.min.js' %}"></script>
+<!-- Main JS -->
+<script src="{% static 'js/main.js' %}"></script>
+<!-- Tags -->
+<!-- jQuery UI -->
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
+<!-- Angular js -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="{% static 'js/bootstrap-tagsinput-angular.js' %}"></script>
+<script src="{% static 'js/addTag.js' %}"></script>
+<!-- add tag function in new clothes page.js -->
+<!-- <script src="{% static 'js/addTag_newclothes.js' %}"></script> -->
+
+</body>
+</html>

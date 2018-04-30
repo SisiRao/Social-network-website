@@ -1,0 +1,65 @@
+{% extends "OOTD/base.html" %}
+
+
+{% block content %}
+{% load staticfiles %}
+{% load addcss %}
+
+<div id="fh5co-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>Add New Outfit</h2>
+                <div class="fh5co-spacer fh5co-spacer-sm"></div>
+                <form enctype="multipart/form-data" method="post" action="{% url 'newpost' %}">
+                    <div class="row">
+                        <div class="col-md-6" style="width:300px; height:350px;">
+                            <img src="{% static 'images/default_outfit.jpeg' %}" alt="Please upload a picture"
+                                 style="width: 100%">
+                        </div>
+                        {% for field in form.visible_fields %}
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div class="col-sm-6 control-label">{{ field.label }}</div> 
+                                
+                                {{ field|addcss:"form-control" }}
+                                
+                                <div class="col-sm-7">
+                                    <span class="help-inline">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- <table>
+                        {% for field in form.visible_fields %}
+                            <tr>
+                                <td>{{field.label_tag}}</td>
+                                <td>{{field}}</td>
+                            </tr>
+                        {% endfor %}
+                        </table> -->
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <td><input type="submit" class="btn btn-primary" value="Continue adding clothes"></td>
+                            </div>
+                        </div>
+                    </div>
+                   <!--  <div class="bs-example">
+                        <label>Add Tags</label>
+                        <input type="text" value="skirt,white-series,Chanel,Pittsburgh" data-role="tagsinput"/>
+                    </div> -->
+                    {% csrf_token %}
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

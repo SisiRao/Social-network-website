@@ -1,0 +1,339 @@
+{% extends "OOTD/base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+<div id="fh5co-main">
+	<div class="container">
+		<table>
+				<tr> 
+					<th class="index-filter-label">Gender</th>
+					<th><select class="index-filter">
+						<option value="volvo">Female</option>
+						<option value="saab">Male</option>
+					</select></th>
+					<th class="index-filter-label">Brand</th>
+					<th><input class="index-filter" type="text" placeholder="Select brands..." name="search" ></th>
+					<th><p></p></th>
+					<th class="index-filter-label">Height</th>
+					<th><select class="index-filter" >
+						<option value="volvo">less than 160cm</option>
+						<option value="saab">160cm~170cm</option>
+						<option value="saab">170cm~180cm</option>
+						<option value="saab">180cm~190cm</option>
+						<option value="saab">greater than 190cm</option>
+					</select></th>
+					<th class="index-filter-label">Weight </th>
+					<th><select class="index-filter" >
+						<option value="volvo">less than 50kg</option>
+						<option value="saab">50kg~60kg</option>
+						<option value="saab">170cm~180cm</option>
+						<option value="saab">180cm~190cm</option>
+						<option value="saab">greater than 190cm</option>
+					</select></th>
+					<th class="index-filter-label">Age</th>
+					<th><select class="index-filter" >
+						<option value="volvo">20~25</option>
+						<option value="saab">25~30</option>
+						<option value="saab">170cm~180cm</option>
+						<option value="saab">180cm~190cm</option>
+						<option value="saab">greater than 190cm</option>
+					</select></th>
+					<th><button class="btn btn-primary index-filter-btn"> Search</button></th>
+					</tr>
+				</table>
+		<div class="row">
+			<div id="fh5co-board" data-columns>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/profile.jpg' %}" class="image-popup fh5co-board-img">
+							<img src="{% static 'images/profile.jpg' %}" alt="Free HTML5 Bootstrap template">
+						</a>
+						<div class="planetmap">
+							<div class="tagged" style="left:45%; top:30%;" >
+								<!-- <div class="tagged_box" style="width:20px; height:20px; display:none;" ></div> -->
+								<div class="tagged_circle" style="display:none;"></div>
+								<a href="{% url 'product' %}">
+									<div class="tagged_title" style="top:25; left:25; display:none;" >Nike</div>
+								</a>
+							</div>
+							<div class="tagged" style="left:53%; top:55%;" >
+								<!-- <div class="tagged_box" style="width:20px; height:20px; display:none;" ></div> -->
+								<div class="tagged_circle" style="display:none;"></div>
+								<a href="{% url 'product' %}">
+									<div class="tagged_title" style="top:25; left:25; display:none;" >Levis</div>
+								</a>
+							</div>
+							<div class="tagged" style="left:35%; top:65%;" >
+								<!-- <div class="tagged_box" style="width:20px; height:20px; display:none;" ></div> -->
+								<div class="tagged_circle" style="display:none;"></div>
+								<a href="{% url 'product' %}">
+									<div class="tagged_title" style="top:25; left:25; display:none;" >Uniqlo</div>
+								</a>
+							</div>
+                    	</div>
+						<img class="tag_btn" src="{% static 'images/tag_btn.png' %}" onclick="showTags()" >
+					</div>
+					<div class="fh5co-desc">
+						<a href="{% url 'profile' user.id %}">Mark</a>
+						<p>185cm Pittsburgh</p>
+					</div>		
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/new.jpg' %}" class="image-popup fh5co-board-img"><a href="{% url 'product' %}"><img src="{% static 'images/new.jpg' %}"></a>
+						<div class="fh5co-desc">Tiffany Lee : 160cm Maryland</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/homepage5.jpg' %}" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage5.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">May Smith : 160cm Los Angeles</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/homepage7.jpg' %}" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage7.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Ted Lee : 160cm NYC</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/homepage1.jpg' %}" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage1.jpg' %}"></a>
+						<div class="fh5co-desc">Alice Wang : 180cm U.S</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/homepage8.jpg' %}" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage8.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sisi Rao : 160cm U.S</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="{% static 'images/homepage4.jpg' %}" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage4.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sisi Rao : 160cm U.S</div>
+							<div ><button>Follow</button></div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_6.jpg" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage6.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sisi Rao : 160cm U.S</div>
+							<div ><button>Follow</button></div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_6.jpg" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage6.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sisi Rao : 160cm U.S</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_6.jpg" class="image-popup fh5co-board-img"><img src="{% static 'images/homepage6.jpg' %}" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sisi Rao : 160cm U.S</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_10.jpg" class="image-popup fh5co-board-img"><img src="images/img_10.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Incidunt, eaque et. Et odio excepturi, eveniet facilis explicabo assumenda.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_11.jpg" class="image-popup fh5co-board-img"><img src="images/img_11.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Laborum dolores nihil voluptates quas alias distinctio fugiat tempora sit.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_12.jpg" class="image-popup fh5co-board-img"><img src="images/img_12.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sit, quis nulla amet numquam fugit, in reiciendis laboriosam dolor.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_13.jpg" class="image-popup fh5co-board-img"><img src="images/img_13.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Possimus explicabo voluptatem natus nisi similique ipsa repudiandae? Quibusdam, fuga.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_14.jpg" class="image-popup fh5co-board-img"><img src="images/img_14.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Magni repellendus iusto mollitia, quibusdam facilis incidunt. Sunt, repellat, voluptatem.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_15.jpg" class="image-popup fh5co-board-img"><img src="images/img_15.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Unde iure rerum cupiditate explicabo quam aut vel earum numquam.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_16.jpg" class="image-popup fh5co-board-img"><img src="images/img_16.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Qui nisi error dolorum dolor delectus, alias doloremque perspiciatis nemo.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_18.jpg" class="image-popup fh5co-board-img"><img src="images/img_18.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Neque porro vero cumque natus nam voluptatibus, ratione, commodi labore.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_17.jpg" class="image-popup fh5co-board-img"><img src="images/img_17.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Quisquam quia totam, sit ea maxime sint sed excepturi quod.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_19.jpg" class="image-popup fh5co-board-img"><img src="images/img_19.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Nesciunt non iste ex nemo sapiente eum, provident nam corporis.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_20.jpg" class="image-popup fh5co-board-img"><img src="images/img_20.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Harum repellat labore est cum ipsa, nesciunt neque mollitia adipisci?</div>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_22.jpg" class="image-popup fh5co-board-img"><img src="images/img_22.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Quos repellendus repudiandae debitis reprehenderit cupiditate cumque accusamus exercitationem, harum.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_23.jpg" class="image-popup fh5co-board-img"><img src="images/img_23.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sunt numquam itaque delectus, dignissimos dolorem obcaecati vel, atque eos.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_24.jpg" class="image-popup fh5co-board-img"><img src="images/img_24.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Adipisci consequuntur ipsa fugit perspiciatis eligendi. Omnis blanditiis, totam placeat.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_25.jpg" class="image-popup fh5co-board-img"><img src="images/img_25.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Quos repellendus repudiandae debitis reprehenderit cupiditate cumque accusamus exercitationem, harum.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_26.jpg" class="image-popup fh5co-board-img"><img src="images/img_26.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Sunt numquam itaque delectus, dignissimos dolorem obcaecati vel, atque eos.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_27.jpg" class="image-popup fh5co-board-img"><img src="images/img_27.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Adipisci consequuntur ipsa fugit perspiciatis eligendi. Omnis blanditiis, totam placeat.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_28.jpg" class="image-popup fh5co-board-img"><img src="images/img_28.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Adipisci consequuntur ipsa fugit perspiciatis eligendi. Omnis blanditiis, totam placeat.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_29.jpg" class="image-popup fh5co-board-img"><img src="images/img_29.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Adipisci consequuntur ipsa fugit perspiciatis eligendi. Omnis blanditiis, totam placeat.</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="animate-box">
+						<a href="images/img_30.jpg" class="image-popup fh5co-board-img"><img src="images/img_30.jpg" alt="Free HTML5 Bootstrap template"></a>
+						<div class="fh5co-desc">Adipisci consequuntur ipsa fugit perspiciatis eligendi. Omnis blanditiis, totam placeat.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<label hidden id="user">{{user.id}}</label>
+<h3>See users worldwide</h3>
+<div id="map" style="height:400px;width:100%"></div>
+ <!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMabzaPmRAMk8G4XP0DhSlASFpgNAmDU&callback=initMap">
+</script>
+<script>
+var map;
+
+function getPosts() {
+    $.ajax({
+        url: "/OOTD/location",
+        dataType : "json",
+        //data: "latest_post="+latest_post,
+        success: load_mark
+    });
+}
+
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 2,
+    center: new google.maps.LatLng(2.8,-187.3),
+    mapTypeId: 'terrain'
+  });
+
+  }
+
+// Loop through the results array and place a marker for each
+// set of coordinates.
+
+
+function load_mark(results) {
+  for (var i = 0; i < results.features.length; i++) {
+    var coords = results.features[i].geometry.coordinates;
+    var latLng = new google.maps.LatLng(coords[1],coords[0]);
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+      url: 'profile/'+results.features[i].pk
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+    window.location.href = this.url;
+    });
+  }
+}
+
+
+// Call getPosts as soon as page is finished loading
+window.onload = getPosts;
+
+// causes Posts to be re-fetched every 5 seconds
+window.setInterval(getPosts, 5000);
+</script>
+
+{% endblock %}
+
+<!-- <footer id="fh5co-footer">
+
+	<div class="container">
+		<div class="row row-padded">
+			<div class="col-md-12 text-center">
+				<p class="fh5co-social-icons">
+					<a href="#"><i class="icon-twitter"></i></a>
+					<a href="#"><i class="icon-facebook"></i></a>
+					<a href="#"><i class="icon-instagram"></i></a>
+					<a href="#"><i class="icon-dribbble"></i></a>
+					<a href="#"><i class="icon-youtube"></i></a>
+				</p>
+				<p><small>&copy; Hydrogen Free HTML5 Template. All Rights Reserved. <br>Designed by: <a href="http://freehtml5.co/" target="_blank">FREEHTML5.co</a> | Images by: <a href="http://pexels.com" target="_blank">Pexels</a> </small></p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+

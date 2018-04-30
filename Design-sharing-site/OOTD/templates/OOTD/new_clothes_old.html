@@ -1,0 +1,84 @@
+{% extends "OOTD/base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id='image_panel' >
+    <img id='imageMap' src="{% url 'photo' outfit.id %}" style="max-width: 500px; height: auto;" >
+    <div id='my-mapper' style="width: 100px; height: 100px; cursor: move; position: absolute;">
+        <img id='my-mapper-img' class="tag_btn" src="{% static 'images/tag_btn.png' %}" >        
+        <input type="hidden" name="mapper_top" value="" />
+        <input type="hidden" name="mappter_left" value="" />
+    </div>
+
+</div>
+
+<script>
+//Make the DIV element draggagle:
+dragElement(document.getElementById(("my-mapper")));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById("my-mapper-img")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById("my-mapper-img").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+</script>
+
+
+<div class="col-md-6" >
+
+    <h2> Add Related Clothes</h2>
+    <h5 >New Clothes</h5> 
+    <form enctype="multipart/form-data" method="post" action="{% url 'newclothes' outfit.id %}">
+        <table>
+            {% for field in clothesform.visible_fields %}
+            <tr>
+                <td>{{field.label_tag}}</td>
+                <td>{{field}}</td>
+            </tr>
+        </table>
+        {% endfor %}
+        <input type="submit" class="btn btn-primary" value="Add Clothes">
+        {% csrf_token %}
+    </form>
+       
+    <form action="{% url 'index' %}" method="post">
+        <td><input type="submit" class="btn btn-primary" value="Done! Submit the post."></td>
+        {% csrf_token %}
+    </form>
+</div>
+
+{% endblock %}

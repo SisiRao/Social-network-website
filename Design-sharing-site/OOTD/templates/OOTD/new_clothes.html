@@ -1,0 +1,73 @@
+{% extends "OOTD/base.html" %}
+
+{% block content %}
+{% load staticfiles %} 
+{% load addcss %}
+<script src="{% static 'js/addTag_new_clothes.js' %}"></script>
+        <div id='main_panel'>
+             <div style='margin: auto; width: 600px;'>
+                <div id='image_panel' >
+                    <div id = "mytest">
+                    <img src="{% url 'photo' outfit.id %}" id='imageMap' style="max-width: 500px; height: auto;" /></div>
+                    <div id='mapper'>
+                        <div class="tagged_circle" style="display:none;"></div>
+
+                        <img src="{% static 'images/tag_btn.png' %}" style='max-height: 50px; width: :auto' />
+                        <!-- <input id = "tag-top" type="hidden" name="mapper_top"  />
+                        <input id = "tag-left" type="hidden" name="mappter_left" /> -->
+                    </div>
+
+                    <div id="planetmap">
+
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+
+<div class="col-md-8 col-md-offset-2" >
+
+    <h2> Add Related Clothes</h2>
+    <h5 >New Clothes</h5> 
+    <form enctype="multipart/form-data" method="post" action="{% url 'newclothes' outfit.id %}">
+        <div class="row">                   
+            {% for field in clothesform.visible_fields %}
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="col-sm-12 control-label ">{{ field.label }}</div> 
+                    
+                    {{ field|addcss:"form-control" }}
+                    
+                    <div class="col-sm-7">
+                        <span class="help-inline">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% for field in clothesform.hidden_fields %}
+                {{field.label_tag}}
+                {{field}} {{field.errors}}
+            {% endfor %}
+            
+        </div>
+
+
+        <input id = "tag-top" type="hidden" name="mapper_top"  />
+        <input id = "tag-left" type="hidden" name="mapper_left" />
+        <input type="submit" class="btn btn-primary" value="Add Clothes">
+        {% csrf_token %}
+    </form>
+       
+    <form action="{% url 'index' %}" method="post">
+        <td><input type="submit" class="btn btn-primary" value="Done! Submit the post."></td>
+        {% csrf_token %}
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "OOTD/base.html" %}
+
+<!-- {% load staticfiles %} -->
+
+{% load addcss %}
+
+{% block content %}
+<div id="fh5co-main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<h4>Register for the Outfit of the day:</h4>
+					<div class="fh5co-spacer fh5co-spacer-sm"></div>
+					<form method="post" action="{% url 'register' %}">
+						<div class="row">					
+							{% for field in form.visible_fields %}
+				            <div class="col-md-6">
+					            <div class="form-group">
+					                <div class="col-sm-6 control-label ">{{ field.label }}</div> 
+					                
+					                {{ field|addcss:"form-control" }}
+					                
+					                <div class="col-sm-12">
+					                    <span class="help-inline">
+					                        {% for error in field.errors %}
+					                            {{ error }}
+					                        {% endfor %}
+					                    </span>
+					                </div>
+					            </div>
+					        </div>
+				        	{% endfor %}
+
+				        	<div class="form-group">
+								<input type="submit" class="btn btn-primary btn-sm" value="Register">
+							</div>
+
+					        {% for field in form.hidden_fields %}
+					            {{field}} {{field.errors}}
+					        {% endfor %}
+						    {% csrf_token %}
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="map" style="height:300px;width:300px;margin-left: auto;margin-right: auto;"></div>
+ <!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMabzaPmRAMk8G4XP0DhSlASFpgNAmDU&callback=initMap">
+
+</script>
+<script>
+
+function initMap() {
+      document.getElementById("id_latitude").value = 0.0;
+      document.getElementById("id_longitude").value = 0.0;
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 6
+  });
+  var infoWindow = new google.maps.InfoWindow({map: map});
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      document.getElementById("id_latitude").value = position.coords.latitude+(Math.random()*0.001);
+      document.getElementById("id_longitude").value = position.coords.longitude;
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+
+  infoWindow.setContent(browserHasGeolocation ?
+                        'My location is a secret!' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
+
+
+</script>
+{% endblock %}
+

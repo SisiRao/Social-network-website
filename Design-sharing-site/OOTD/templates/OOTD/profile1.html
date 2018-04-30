@@ -1,0 +1,392 @@
+{% extends "OOTD/base.html" %}
+
+{% block user-info %}
+
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<div id="fh5co-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>{{profile.user.username}}'s Profile</h2>
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#profile" data-toggle="tab">
+                           profile
+                       </a>
+                   </li>
+                   <li><a href="#posts" data-toggle="tab"> Posts</a></li>
+                   <li><a href="#favorites" data-toggle="tab"> Favorites</a></li>
+               </ul>
+               <div class="tab-content">
+                <div id="profile" class="tab-pane fade in active">
+                    <div class="fh5co-spacer fh5co-spacer-sm"></div>
+                    <p>
+                        <div class="col-md-6" style="width:300px; height:300px;">
+                            <img src="{% url 'get_picture' profile.user.id %}" style="width: 100%">
+                        </div>
+                        {% for error in errors %}
+                        <p style="color:red">
+                            {{error}}
+                        </p>
+                        {% endfor %}
+                        <p>
+                            <div class="col-md-6">
+                                {% if user.id != profile.user.id %}
+                                <h3>{{profile.first_name}} {{profile.last_name}}</h3>
+                                {% if not is_followed %}
+                                <form action="{% url 'follow' profile.user.id %}" method="POST">
+                                    <button type="submit" class="btn btn-info btn-sm" >Follow</button>
+                                    {% csrf_token %}
+                                </form>
+                                {% endif %}
+                                {% if is_followed %}
+                                <form action="{% url 'unfollow' profile.user.id %}" method="POST">
+                                    <button type="submit" class="btn btn-info btn-sm" >Unfollow</button>
+                                    {% csrf_token %}
+                                </form>
+                                {% endif %}
+                                {% endif %}
+                                {% if user.id == profile.user.id %}
+                                <h3>{{profile.first_name}} {{profile.last_name}} <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></h3><br>
+
+                                <div class="modal fade" id="edit" role="dialog">
+                                   <div class="modal-dialog modal-md">
+                                     <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit your profile:</h4>
+                                    </div>
+
+
+                                    <div class="modal-body">
+                                        <form enctype="multipart/form-data" action="{% url 'edit_profile' %}" method="POST">
+                                            <a> {{form.occupation.label_tag}}</a><br/>
+                                            <a> {{form.occupation}}</a><br/>
+                                            <a> {{form.picture.label_tag}}</a><br/>
+                                            <a> {{form.picture}}</a><br/>
+                                            <a> {{form.bio.label_tag}}</a><br/>
+                                            <a> {{form.bio}}</a><br/>
+
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-default" >Submit</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+                      {% endif %}
+
+                      <h4 id="city"><span class="glyphicon glyphicon-map-marker"></span>  </h4>
+                      {% if user.id == profile.user.id %}
+                      <form enctype="multipart/form-data" action="{% url 'relocate' %}" method="POST">
+                        {% for field in form.hidden_fields %}
+                        {{field}} {{field.errors}}
+                        {% endfor %}
+                        {% csrf_token %}
+                        <button type="submit" id="locate" class="btn btn-info btn-sm" >Locate me</button>
+                    </form>
+                    {% endif %}
+                    <h4><span class="glyphicon glyphicon-lock"></span> {{profile.occupation}}</h4>
+                    <br>
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                    data-target="#myModal">
+                    <span class="glyphicon glyphicon-user"></span> Followers: {{followed_number}}
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                data-target="#myModal2">
+                <span class="glyphicon glyphicon-heart"></span> Following: {{follow_number}}
+            </button>
+        </div>
+
+    {% endif %}
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Followers:</h4>
+                </div>
+                <div class="modal-body">
+                    <ul id="followers">
+                        {% for follow in followed_by %}
+                        <li><span class="glyphicon glyphicon-user"></span>
+                            <a  href="{% url 'profile' follow.id %}" style="color: blue;">{{follow.first_name}}{{follow.last_name}}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal2" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Followers:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="following">
+                            {% for follow in follow_list %}
+                            <li><span class="glyphicon glyphicon-user"></span>
+                                <a  href="{% url 'profile' follow.id %}" style="color: blue;">{{follow.first_name}}{{follow.last_name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <p name="bio" id="bio">{{profile.bio}}
+                    </p>
+                </div>
+            </div>
+            <label hidden id="longitude">{{profile.longitude}}</label><br>
+            <label hidden id="latitude">{{profile.latitude}}</label>
+            <div id="map" style="height:300px;width:300px;margin-left: auto;margin-right: auto;"></div>
+        </div>
+
+        <div id="posts" class="tab-pane fade">
+            <div id="fh5co-board" data-columns>
+
+             {% for outfit in outfits1 %}
+             <div class="item">
+                <div class="animate-box">
+                 <a id="outfit-container-{{outfit.id}}" href="{% url 'photo' outfit.id %}" class="image-popup fh5co-board-img"><img style="max-width:400px; id="outfit-picture-{{outfit.id}}" src="{% url 'photo' outfit.id %}" alt="post picture"/>
+                 </a>
+                 <div class="planetmap">
+                    {% for cloth in clothes1 %}
+                    {% if cloth.outfit == outfit %}
+                    <div id="clothes-tagged-{{cloth.id}}" class="tagged" style="left:45%; top:30%;" >
+                        <script type="text/javascript">
+                            var out_width = $("#outfit-container-"+{{outfit.id}}).width()/2;
+                            var out_height = $("#outfit-container-"+{{outfit.id}}).height();
+                            var inner_width = $("#outfit-picture-"+{{outfit.id}}).width();
+                            var inner_height = $("#outfit-picture-"+{{outfit.id}}).height();
+                            var width_ratio = inner_width/out_width;
+                            var height_ratio = inner_height/out_height;
+
+                            if (width_ratio < 1 || height_ratio < 1) {
+                                $("#clothes-tagged-"+{{cloth.id}})
+                                .css("top",({{cloth.top}}*100*height_ratio)+'%')
+                                .css("left",({{cloth.left}}*100*width_ratio)+'%');
+                            } else {
+                                $("#clothes-tagged-"+{{cloth.id}})
+                                .css("top",({{cloth.top}}*100)+'%')
+                                .css("left",({{cloth.left}}*100)+'%');
+                            }
+
+                        </script>
+                        <div class="tagged_circle" style="display:none;"></div>
+                        <a href="{% url 'getclothes' cloth.id %}">
+                            <div class="tagged_title" style="top:25; left:25; display:none;" >{{cloth.description}}</div>
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <div class="col-sm-3 col-sm-offset-3">
+                {% if outfit in liked_outfits %}
+                <a id="outfit-like-{{outfit.id}}" ">
+                    <input type="hidden" value="1" />
+                    <span class="glyphicon glyphicon-heart pink"/>
+                    <span class="likeno" style=" font-family: 'Montserrat', arial, sans-serif;"> {{outfit.likes}}</span>
+                </a>
+                {% else %}
+                <a id="outfit-like-{{outfit.id}}" ">
+                    <input type="hidden" value="0" />
+                    <span class="glyphicon glyphicon-heart pink"/>
+                    <span class="likeno" style=" font-family: 'Montserrat', arial, sans-serif;"> {{outfit.likes}}</span>
+                </a>
+                {% endif %}
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                {% if request.user == outfit.created_by %}
+                <a href="{% url 'delete' outfit.id %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                {% endif %}
+            </div>
+            <div class="col-sm-2">
+            </div>
+
+
+            <div class="fh5co-desc">
+                <a href="{% url 'profile' outfit.created_by.id %}">{{outfit.created_by.username}}</a>
+                <p> {{outfit.description}}</p>
+            </div>
+
+
+            <div class="fh5co-desc">Posted on: {{outfit.creation_time}}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+
+<div id="favorites" class="tab-pane fade">
+    <div id="fh5co-board" data-columns>
+        {% for outfit in liked_outfits %}
+        <div class="item">
+            <div class="animate-box">
+             <a id="outfit-container-{{outfit.id}}" href="{% url 'photo' outfit.id %}" class="image-popup fh5co-board-img"><img style="max-width:400px; id="outfit-picture-{{outfit.id}}" src="{% url 'photo' outfit.id %}" alt="post picture"/>
+             </a>
+             <div class="fh5co-desc">
+                <a href="{% url 'profile' outfit.created_by.id %}">{{outfit.created_by.username}}</a>
+                {% if request.user in outfit.favorite_by %}
+                <a id="outfit-like-{{outfit.id}}" value="1" onclick="like(this.id)">
+                    <span class="glyphicon glyphicon-heart pink"/>
+                    <span class="likeno" style=" font-family: 'Montserrat', arial, sans-serif;"> {{outfit.likes}}</span>
+                </a>
+                {% else %}
+                <a id="outfit-like-{{outfit.id}}" value="0" onclick="like(this.id)">
+                    <span class="glyphicon glyphicon-heart-empty pink" />
+                    <span class="likeno" style=" font-family: 'Montserrat', arial, sans-serif;"> {{outfit.likes}}</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="fh5co-desc">Posted on: {{outfit.creation_time}}</div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+
+
+</div>
+</div>
+</div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMabzaPmRAMk8G4XP0DhSlASFpgNAmDU&callback=initMap">
+
+</script>
+<script>
+
+function initMap() {
+ if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+
+    document.getElementById("id_latitude").value = position.coords.latitude+(Math.random()*0.001);
+    document.getElementById("id_longitude").value = position.coords.longitude;
+
+}, function() {
+  handleLocationError(true, infoWindow, map.getCenter());
+});
+} else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+}
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 6
+});
+  var infoWindow = new google.maps.InfoWindow({map: map});
+
+  var pos = {
+    lat: parseFloat(document.getElementById("latitude").innerHTML),
+    lng: parseFloat(document.getElementById("longitude").innerHTML)
+};
+
+
+infoWindow.setPosition(pos);
+if(pos.lat == 0){
+    infoWindow.setContent('My location is a secret!');
+    document.getElementById('city').innerHTML += "Location unknown";
+}
+else{
+    infoWindow.setContent('I am here!');
+    getCity();
+}
+
+map.setCenter(pos);
+
+
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+}
+
+function getCity(){
+    var latlng = new google.maps.LatLng(parseFloat(document.getElementById("latitude").innerHTML),
+        parseFloat(document.getElementById("longitude").innerHTML));
+
+    new google.maps.Geocoder().geocode({'latLng' : latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+                var country = null, countryCode = null, city = null;
+                var c, lc, component;
+                for (var r = 0, rl = results.length; r < rl; r += 1) {
+                    var result = results[r];
+
+                    if (!city && result.types[0] === 'locality') {
+                        for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                            component = result.address_components[c];
+
+                            if (component.types[0] === 'locality') {
+                                city = component.long_name;
+                                break;
+                            }
+                        }
+                    }
+                    else if (!country && result.types[0] === 'country') {
+                        countryCode = result.address_components[0].short_name;
+                    }
+                    if (city && country) {
+                        break;
+                    }
+                }
+
+                document.getElementById('city').innerHTML += city+", ";
+                document.getElementById('city').innerHTML += countryCode;
+            }
+        }
+    });
+}
+
+
+
+</script>
+    </div></div>
+{% endblock %}>
